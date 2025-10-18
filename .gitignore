@@ -37,5 +37,26 @@
 *.out
 *.app
 
+# Common build directory names
+build/
+[Bb]uild/
+cmake-build-*/
+bin/
+
+# CMake cache and internal files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+compile_commands.json
+
 # debug information files
 *.dwo
+videoserver/static/videos/cuhk/
+videoserver/static/videos/cuhk.tar.gz
+videoserver/static/videos/tears-of-steel/
+videoserver/static/videos/tears-of-steel.tar.gz
+build/
+__pycache__
+.venv
+.DS_Store
