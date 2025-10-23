@@ -120,6 +120,9 @@ public:
 
             LoadBalancerRequest req;
             memcpy(&req, buffer, sizeof(req));
+            // covert request id to host order
+            req.request_id = ntohs(req.request_id);
+
             char ip_string_buffer[INET_ADDRSTRLEN];
             inet_ntop(AF_INET, &req.client_addr, ip_string_buffer, INET_ADDRSTRLEN);
             string ip_str(ip_string_buffer);
@@ -180,7 +183,7 @@ class LoadBalancerRoundRobin : public LoadBalancer {
         // maybe also check active connections?
         const Server& server = servers[rrIndex];
         rrIndex = (rrIndex + 1) % servers.size();
-        return LoadBalancerResponse{server.ip, htons(server.port), req->request_id};
+        return LoadBalancerResponse{server.ip, htons(server.port), htons(req->request_id)};
     }
 public:
     LoadBalancerRoundRobin(string port) : LoadBalancer(port) {}
@@ -289,7 +292,7 @@ public:
         if (minCost == -1) {
             throw "server not found";
         }
-        return LoadBalancerResponse{min->ip, htons(min->port), req->request_id};
+        return LoadBalancerResponse{min->ip, htons(min->port), htons(req->request_id)};
     }
 };
 
